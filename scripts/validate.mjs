@@ -22,7 +22,7 @@ const requiredFiles = [
   "docs/demo/index.html",
   "docs/benchmark/index.html",
   "docs/sitemap.xml",
-  ".github/workflows/pages.yml",
+  ".github/workflows/validate.yml",
   "evals/trigger-cases.json"
 ];
 
