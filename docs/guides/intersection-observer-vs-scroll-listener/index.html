@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IntersectionObserver vs Scroll Listener for Scroll Animations</title>
+<meta name="description" content="Choose between IntersectionObserver, a scroll listener, CSS scroll timelines, Motion values, and GSAP based on discrete identity versus continuous progress.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/guides/intersection-observer-vs-scroll-listener/">
+<link rel="stylesheet" href="../../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IntersectionObserver vs Scroll Listener for Scroll Animations">
+<meta property="og:description" content="Choose between IntersectionObserver, a scroll listener, CSS scroll timelines, Motion values, and GSAP based on discrete identity versus continuous progress.">
+<meta property="og:url" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/guides/intersection-observer-vs-scroll-listener/">
+<meta property="og:image" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/assets/social-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IntersectionObserver vs Scroll Listener for Scroll Animations">
+<meta name="twitter:description" content="Choose between IntersectionObserver, a scroll listener, CSS scroll timelines, Motion values, and GSAP based on discrete identity versus continuous progress.">
+<meta name="twitter:image" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/assets/social-card.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"Zero-Jank Scroll Agent Skill","description":"Open-source Agent Skill for building and auditing smooth, accessible, maintainable scroll-driven web interfaces.","codeRepository":"https://github.com/harshavarma02/zero-jank-scroll-agent-skill","programmingLanguage":["Markdown","JavaScript","CSS","HTML"],"license":"https://github.com/harshavarma02/zero-jank-scroll-agent-skill/blob/main/LICENSE","author":{"@type":"Person","name":"Harsha Varma","url":"https://github.com/harshavarma02"}}</script>
+</head>
+<body>
+<header class="nav"><div class="shell nav-inner"><a class="brand" href="../../index.html">Zero-Jank Scroll</a><nav class="nav-links" aria-label="Primary"><a href="../../demo/">Demo</a><a href="../../benchmark/">Benchmark</a><a href="../../guides/fix-scroll-jank/">Guides</a><a href="https://github.com/harshavarma02/zero-jank-scroll-agent-skill">GitHub</a></nav></div></header>
+<main class="article"><div class="breadcrumbs"><a href="../../">Home</a> / Guides / IntersectionObserver vs scroll listener</div><div class="kicker">Architecture decision</div><h1>IntersectionObserver vs scroll listener for scroll-driven UI</h1><p>The correct choice depends on whether the interface needs a discrete identity or a continuous value. Treating every scroll interaction as continuous progress is a common source of unnecessary complexity.</p><h2>Use IntersectionObserver for discrete activation</h2><p>Choose an observer when you need to know which chapter, capability, product section, or navigation item is active. Observe real elements, align the observer activation line with the visual sticky offset, and update state only when the identity changes.</p><h2>Use continuous progress only when the visual requires it</h2><p>A progress bar, path drawing, parallax amount, or scrubbed scene may need a value on every animation frame. Prefer a CSS scroll timeline when browser requirements permit, an existing animation primitive such as a MotionValue, or one requestAnimationFrame-coalesced controller. Do not feed the value through broad component state.</p><h2>Why passive is not enough</h2><p>A passive scroll listener can improve input handling when the listener never prevents default behavior, but it does not make expensive JavaScript, layout reads, DOM writes, or component rerenders inexpensive. The work still has to execute.</p><h2>Top-line versus center activation</h2><p>Use the viewport center only when the visual design says a chapter becomes active at the center. For sticky step interfaces, users often expect the panel to change when the next left-side heading reaches the same top line as the sticky panel. Share one CSS offset between the sticky element, scroll target, and observer root margin.</p><div class="callout">Identity problem: observer. Progress problem: scroll timeline or controlled frame value. Timeline choreography: a dedicated animation timeline such as ScrollTrigger.</div></main>
+<footer class="footer"><div class="shell footer-inner"><span>Zero-Jank Scroll Agent Skill · MIT</span><span>Created by Harsha Varma</span></div></footer>
+</body>
+</html>

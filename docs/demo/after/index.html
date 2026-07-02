@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>After — Zero-Jank Sticky Scroll</title>
+<style>
+:root{--bg:#090909;--panel:#141414;--text:#f7f7f2;--muted:#9b9b95;--line:#ffffff1f;--accent:#62e58c;--header:68px;--sticky-gap:22px}*{box-sizing:border-box}html{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% 8%,#62e58c18,transparent 32rem),var(--bg)}.topbar{position:fixed;inset:0 0 auto;z-index:20;height:var(--header);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,4vw,64px);border-bottom:1px solid var(--line);background:#090909ed}.brand{font-weight:850;letter-spacing:-.03em}.badge{padding:7px 12px;border:1px solid #62e58c59;border-radius:999px;color:#b8f5cb;background:#62e58c14;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.hero,.outro{min-height:82svh;display:grid;place-items:center;padding:calc(var(--header) + 60px) 24px 70px;text-align:center}.hero>div,.outro>div{max-width:1000px}.eyebrow{color:var(--accent);font-size:13px;font-weight:850;letter-spacing:.18em;text-transform:uppercase}h1{margin:18px auto 24px;max-width:980px;font-size:clamp(52px,8vw,116px);line-height:.91;letter-spacing:-.065em}.hero p,.outro p{max-width:720px;margin:auto;color:var(--muted);font-size:clamp(17px,2vw,22px);line-height:1.6}
+#capabilities{width:min(1420px,calc(100% - clamp(36px,8vw,128px)));margin:auto}.layout{display:grid;grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr);gap:clamp(24px,5vw,70px);align-items:start}.step{min-height:clamp(560px,74svh,820px);display:grid;align-content:center}.step-button{scroll-margin-top:calc(var(--header) + var(--sticky-gap));width:100%;display:grid;grid-template-columns:40px 1fr;gap:14px;padding:19px;border:1px solid var(--line);border-radius:18px;color:var(--muted);background:#ffffff07;text-align:left;cursor:pointer;transition:color 220ms ease,border-color 220ms ease,background-color 220ms ease,transform 280ms cubic-bezier(.22,1,.36,1)}.step-button:hover{background:#ffffff0d;transform:translate3d(4px,0,0)}.step-button[aria-current=step]{color:var(--text);border-color:#62e58c99;background:#62e58c14;transform:translate3d(8px,0,0)}.step-button:focus-visible{outline:3px solid var(--accent);outline-offset:4px}.num{color:var(--accent);font-size:12px;font-weight:850}.copy strong{display:block;margin-bottom:6px;font-size:20px}.copy span{font-size:14px;line-height:1.45}.stage-column{min-width:0;height:100%}.stage{position:sticky;top:calc(var(--header) + var(--sticky-gap));height:min(calc(100svh - var(--header) - (var(--sticky-gap) * 2)),710px);min-height:510px;overflow:hidden;border:1px solid var(--line);border-radius:30px;background:linear-gradient(145deg,#ffffff0f,#ffffff04),var(--panel);box-shadow:0 70px 180px #0009,inset 0 1px #ffffff0f}.panel{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr;padding:clamp(22px,4vw,44px);opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,18px,0) scale(.985);transition:opacity 220ms ease,transform 320ms cubic-bezier(.22,1,.36,1),visibility 0s linear 320ms}.panel[data-active=true]{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}.panel-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--line)}.panel-head h2{margin:0;font-size:clamp(36px,5vw,72px);letter-spacing:-.055em}.panel-head span{color:var(--muted);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.sim{position:relative;display:grid;place-items:center}.document{width:min(88%,680px);min-height:310px;padding:25px;border:1px solid var(--line);border-radius:20px;background:#1a1a1a;box-shadow:0 36px 120px #0008}.line{height:12px;margin-bottom:14px;border-radius:99px;background:#ffffff1b}.line:nth-child(3n+1){width:92%}.line:nth-child(3n+2){width:76%}.line:nth-child(3n+3){width:84%}.line.hot{background:linear-gradient(90deg,#62e58cd9,#62e58c2e);box-shadow:0 0 34px #62e58c2e}.chip{position:absolute;padding:10px 14px;border:1px solid #ffffff29;border-radius:999px;background:#161616f5;font-size:12px;box-shadow:0 20px 60px #0006}.a{top:18%;left:7%}.b{right:8%;bottom:18%}.c{right:12%;top:25%}.hud{position:fixed;right:18px;bottom:18px;z-index:40;width:min(320px,calc(100vw - 36px));padding:14px 16px;border:1px solid #ffffff24;border-radius:16px;background:#0c0c0cf0;box-shadow:0 20px 80px #0008;font:12px/1.5 ui-monospace,monospace}.hud strong{display:block;margin-bottom:6px;color:#9df2b7}.row{display:flex;justify-content:space-between;gap:12px;color:#bcbcb6}.row output{color:#fff}.mobile-visual{display:none}
+@media(max-width:900px),(max-height:680px){#capabilities{width:min(760px,calc(100% - 36px))}.layout{display:block}.step{min-height:auto;padding:54px 0}.stage-column{display:none}.mobile-visual{display:grid;place-items:center;min-height:350px;margin-top:22px;border:1px solid var(--line);border-radius:24px;background:var(--panel);font-size:clamp(56px,18vw,110px);font-weight:850}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.step-button,.panel{transition-duration:1ms}.panel{transform:none}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="brand">Zero-Jank Scroll</div><div class="badge">After · Fixed</div></header>
+<main>
+<section class="hero"><div><div class="eyebrow">The production architecture</div><h1>Same experience. Better system.</h1><p>The right panel changes only when the next left-side control reaches the sticky top line.</p></div></section>
+<section id="capabilities" aria-label="Document processing capabilities"><div class="layout"><div class="steps">
+<article class="step" data-step="parse"><button class="step-button" data-target="parse" type="button" aria-current="step"><span class="num">01</span><span class="copy"><strong>Parse</strong><span>Understand document structure and reading order.</span></span></button><div class="mobile-visual" aria-hidden="true">P</div></article>
+<article class="step" data-step="extract"><button class="step-button" data-target="extract" type="button"><span class="num">02</span><span class="copy"><strong>Extract</strong><span>Identify fields, relationships and evidence.</span></span></button><div class="mobile-visual" aria-hidden="true">E</div></article>
+<article class="step" data-step="split"><button class="step-button" data-target="split" type="button"><span class="num">03</span><span class="copy"><strong>Split</strong><span>Divide complex material into useful units.</span></span></button><div class="mobile-visual" aria-hidden="true">S</div></article>
+<article class="step" data-step="tag"><button class="step-button" data-target="tag" type="button"><span class="num">04</span><span class="copy"><strong>Tag</strong><span>Attach metadata for retrieval and automation.</span></span></button><div class="mobile-visual" aria-hidden="true">T</div></article>
+</div><div class="stage-column"><div class="stage" aria-label="Capability preview">
+<section class="panel" data-panel="parse" data-active="true"><div class="panel-head"><h2>Parse</h2><span>Step 01</span></div><div class="sim"><div class="document"><div class="line hot"></div><div class="line"></div><div class="line"></div><div class="line hot"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line hot"></div><div class="line"></div><div class="line"></div><div class="line hot"></div></div><i class="chip a">heading</i><i class="chip b">table</i><i class="chip c">paragraph</i></div></section>
+<section class="panel" data-panel="extract" data-active="false" aria-hidden="true" inert><div class="panel-head"><h2>Extract</h2><span>Step 02</span></div><div class="sim"><div class="document"><div class="line"></div><div class="line hot"></div><div class="line"></div><div class="line"></div><div class="line hot"></div><div class="line"></div><div class="line hot"></div><div class="line"></div><div class="line"></div><div class="line hot"></div></div><i class="chip a">invoice_total</i><i class="chip b">customer_id</i><i class="chip c">due_date</i></div></section>
+<section class="panel" data-panel="split" data-active="false" aria-hidden="true" inert><div class="panel-head"><h2>Split</h2><span>Step 03</span></div><div class="sim"><div class="document"><div class="line hot"></div><div class="line hot"></div><div class="line"></div><div class="line"></div><div class="line hot"></div><div class="line hot"></div><div class="line"></div><div class="line"></div><div class="line hot"></div><div class="line"></div></div><i class="chip a">chunk 01</i><i class="chip b">chunk 03</i><i class="chip c">chunk 02</i></div></section>
+<section class="panel" data-panel="tag" data-active="false" aria-hidden="true" inert><div class="panel-head"><h2>Tag</h2><span>Step 04</span></div><div class="sim"><div class="document"><div class="line"></div><div class="line"></div><div class="line hot"></div><div class="line hot"></div><div class="line"></div><div class="line"></div><div class="line hot"></div><div class="line"></div><div class="line hot"></div><div class="line"></div></div><i class="chip a">finance</i><i class="chip b">priority: high</i><i class="chip c">reviewed</i></div></section>
+</div></div></div></section>
+<section class="outro"><div><div class="eyebrow">Natural document flow</div><h2>Four real steps. No percentage timeline.</h2><p>The observer wakes only at the shared activation line; state changes only when identity changes.</p></div></section>
+</main>
+<aside class="hud"><strong>After implementation</strong><div class="row"><span>Global scroll handlers</span><output>0</output></div><div class="row"><span>Observer callbacks</span><output id="callbacks">0</output></div><div class="row"><span>State changes</span><output id="changes">0</output></div><div class="row"><span>Active step</span><output id="active">Parse</output></div><div class="row"><span>Trigger</span><output>sticky top line</output></div></aside>
+<script type="module">
+const buttons=[...document.querySelectorAll('[data-target]')];
+const panels=[...document.querySelectorAll('[data-panel]')];
+const callbacksEl=document.querySelector('#callbacks');
+const changesEl=document.querySelector('#changes');
+const activeEl=document.querySelector('#active');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+let activeId='parse';
+let callbacks=0;
+let changes=0;
+let observer;
+let resizeTimer;
+
+function cssPixels(name){return Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name))||0}
+function activationTop(){return Math.round(cssPixels('--header')+cssPixels('--sticky-gap'))}
+
+function setActive(id){
+  if(id===activeId)return;
+  activeId=id;
+  changes++;
+  for(const button of buttons){
+    const on=button.dataset.target===id;
+    if(on)button.setAttribute('aria-current','step');
+    else button.removeAttribute('aria-current');
+  }
+  for(const panel of panels){
+    const on=panel.dataset.panel===id;
+    panel.dataset.active=String(on);
+    panel.setAttribute('aria-hidden',String(!on));
+    panel.toggleAttribute('inert',!on);
+  }
+  changesEl.textContent=String(changes);
+  activeEl.textContent=id[0].toUpperCase()+id.slice(1);
+}
+
+function syncToActivationLine(){
+  const line=activationTop()+1;
+  let nextId=buttons[0].dataset.target;
+  for(const button of buttons){
+    if(button.getBoundingClientRect().top<=line)nextId=button.dataset.target;
+    else break;
+  }
+  setActive(nextId);
+}
+
+function createObserver(){
+  observer?.disconnect();
+  const top=activationTop();
+  const bottom=Math.max(0,window.innerHeight-top-1);
+  observer=new IntersectionObserver(()=>{
+    callbacks++;
+    syncToActivationLine();
+    callbacksEl.textContent=String(callbacks);
+  },{root:null,rootMargin:`-${top}px 0px -${bottom}px 0px`,threshold:0});
+  for(const button of buttons)observer.observe(button);
+  syncToActivationLine();
+}
+
+for(const button of buttons){
+  button.addEventListener('click',()=>button.scrollIntoView({
+    behavior:reduce.matches?'auto':'smooth',
+    block:'start'
+  }));
+}
+
+function handleResize(){
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(createObserver,120);
+}
+
+addEventListener('resize',handleResize,{passive:true});
+addEventListener('pagehide',()=>{
+  observer?.disconnect();
+  removeEventListener('resize',handleResize);
+},{once:true});
+
+createObserver();
+</script>
+</body>
+</html>

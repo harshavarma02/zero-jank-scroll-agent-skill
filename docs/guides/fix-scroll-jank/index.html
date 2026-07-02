@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to Fix Scroll Jank — Measurement-First Guide</title>
+<meta name="description" content="Diagnose and fix laggy scroll animations, sticky sections, component rerenders, layout thrashing, paint cost, and hidden media work.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/guides/fix-scroll-jank/">
+<link rel="stylesheet" href="../../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Fix Scroll Jank — Measurement-First Guide">
+<meta property="og:description" content="Diagnose and fix laggy scroll animations, sticky sections, component rerenders, layout thrashing, paint cost, and hidden media work.">
+<meta property="og:url" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/guides/fix-scroll-jank/">
+<meta property="og:image" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/assets/social-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Fix Scroll Jank — Measurement-First Guide">
+<meta name="twitter:description" content="Diagnose and fix laggy scroll animations, sticky sections, component rerenders, layout thrashing, paint cost, and hidden media work.">
+<meta name="twitter:image" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/assets/social-card.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"Zero-Jank Scroll Agent Skill","description":"Open-source Agent Skill for building and auditing smooth, accessible, maintainable scroll-driven web interfaces.","codeRepository":"https://github.com/harshavarma02/zero-jank-scroll-agent-skill","programmingLanguage":["Markdown","JavaScript","CSS","HTML"],"license":"https://github.com/harshavarma02/zero-jank-scroll-agent-skill/blob/main/LICENSE","author":{"@type":"Person","name":"Harsha Varma","url":"https://github.com/harshavarma02"}}</script>
+</head>
+<body>
+<header class="nav"><div class="shell nav-inner"><a class="brand" href="../../index.html">Zero-Jank Scroll</a><nav class="nav-links" aria-label="Primary"><a href="../../demo/">Demo</a><a href="../../benchmark/">Benchmark</a><a href="../../guides/fix-scroll-jank/">Guides</a><a href="https://github.com/harshavarma02/zero-jank-scroll-agent-skill">GitHub</a></nav></div></header>
+<main class="article"><div class="breadcrumbs"><a href="../../">Home</a> / Guides / Fix scroll jank</div><div class="kicker">Diagnostic guide</div><h1>How to fix scroll jank without guessing</h1><p>Scroll jank is a symptom, not a single bug. It can come from main-thread work, forced layout, large paints, component rerenders, media decoding, sticky containment, or animation smoothing that intentionally trails the input. The fastest path is to reproduce the exact failure and inspect causes in a stable order.</p><h2>1. Define what “laggy” means</h2><p>Record whether the failure is dropped visual frames, delayed state changes, skipped chapters, sticky detachment, layout jumps, late input response, or a scrubbed animation that trails the pointer. Different symptoms need different fixes.</p><h2>2. Inspect the hot scroll path</h2><p>Search for global scroll listeners, repeated DOM queries, logging, parsing, framework state setters, synchronous storage, and layout reads such as bounding rectangles or offsets. A discrete four-step interface should not calculate continuous progress on every event.</p><h2>3. Check read/write ordering</h2><p>A repeated write-read-write sequence can force the browser to resolve style and layout more often than necessary. Batch stable measurements, prefer observers for identity changes, and keep continuous values outside broad reactive state.</p><h2>4. Inspect paint and hidden work</h2><p>Large backdrop filters, masks, blur, oversized shadows, fixed backgrounds, autoplay video, canvas loops, WebGL scenes, and inactive Lottie animations may continue consuming resources while hidden. Pause inactive work and profile the actual paint regions.</p><h2>5. Verify the fix</h2><p>Repeat the same wheel, trackpad, keyboard, reverse-scroll, resize, zoom, and reduced-motion sequence. Compare traces and render counts. Report what improved and what remains unmeasured.</p><div class="callout">For discrete step activation, start with semantic steps, CSS sticky positioning, one IntersectionObserver, and state changes only when the active identity changes.</div></main>
+<footer class="footer"><div class="shell footer-inner"><span>Zero-Jank Scroll Agent Skill · MIT</span><span>Created by Harsha Varma</span></div></footer>
+</body>
+</html>

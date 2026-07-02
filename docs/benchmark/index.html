@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scroll Performance Benchmark Method — Zero-Jank Scroll</title>
+<meta name="description" content="A transparent source and runtime evidence method for comparing scroll listeners, IntersectionObserver, CSS sticky, Motion, and GSAP ScrollTrigger architectures.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/benchmark/">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scroll Performance Benchmark Method — Zero-Jank Scroll">
+<meta property="og:description" content="A transparent source and runtime evidence method for comparing scroll listeners, IntersectionObserver, CSS sticky, Motion, and GSAP ScrollTrigger architectures.">
+<meta property="og:url" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/benchmark/">
+<meta property="og:image" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/assets/social-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Scroll Performance Benchmark Method — Zero-Jank Scroll">
+<meta name="twitter:description" content="A transparent source and runtime evidence method for comparing scroll listeners, IntersectionObserver, CSS sticky, Motion, and GSAP ScrollTrigger architectures.">
+<meta name="twitter:image" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/assets/social-card.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"Zero-Jank Scroll Agent Skill","description":"Open-source Agent Skill for building and auditing smooth, accessible, maintainable scroll-driven web interfaces.","codeRepository":"https://github.com/harshavarma02/zero-jank-scroll-agent-skill","programmingLanguage":["Markdown","JavaScript","CSS","HTML"],"license":"https://github.com/harshavarma02/zero-jank-scroll-agent-skill/blob/main/LICENSE","author":{"@type":"Person","name":"Harsha Varma","url":"https://github.com/harshavarma02"}}</script>
+</head>
+<body>
+<header class="nav"><div class="shell nav-inner"><a class="brand" href="../index.html">Zero-Jank Scroll</a><nav class="nav-links" aria-label="Primary"><a href="../demo/">Demo</a><a href="../benchmark/">Benchmark</a><a href="../guides/fix-scroll-jank/">Guides</a><a href="https://github.com/harshavarma02/zero-jank-scroll-agent-skill">GitHub</a></nav></div></header>
+<main class="article"><div class="breadcrumbs"><a href="../">Home</a> / Benchmark</div><div class="kicker">Evidence contract</div><h1>How Zero-Jank Scroll evaluates scroll architecture</h1><p>This project does not label an interaction “smooth” based only on code appearance. It separates static source evidence from runtime browser evidence and reports what was actually measured.</p><h2>Source-level comparison</h2><div class="table-wrap"><table><thead><tr><th>Signal</th><th>Fragile demo</th><th>Fixed demo</th></tr></thead><tbody><tr><td>Scroll track</td><td>Hardcoded 400vh</td><td>Real semantic steps</td></tr><tr><td>Native scroll handler</td><td>Global, unthrottled</td><td>None</td></tr><tr><td>Activation</td><td>Continuous percentage math</td><td>Top-line observer boundary</td></tr><tr><td>Layout reads</td><td>Repeated during scrolling</td><td>Only on observer/resize synchronization</td></tr><tr><td>Panel transition</td><td>transition: all + blur</td><td>opacity + transform</td></tr><tr><td>Click navigation</td><td>Manual document coordinates</td><td>scrollIntoView on the real control</td></tr><tr><td>Small/short viewport</td><td>Artificial track retained</td><td>Normal-flow visual fallback</td></tr></tbody></table></div><h2>Runtime procedure</h2><ol><li>Record browser, version, operating system, viewport, zoom, input method, and throttling.</li><li>Capture a performance trace around the interaction.</li><li>Inspect long tasks, scripting, style/layout, paint, and layout shifts.</li><li>For framework projects, compare render counts before and after.</li><li>Repeat slow, fast, reverse, click-to-step, resize, and reduced-motion tests.</li></ol><h2>What this project will not claim</h2><ul><li>A universal FPS number without a recorded trace.</li><li>That transforms and opacity guarantee zero jank.</li><li>That IntersectionObserver is correct for every continuous effect.</li><li>That GSAP, Motion, or native CSS is always the winner.</li></ul><p class="callout">Use the included source audit to find leads, then verify them in a real browser. Static findings are not runtime proof.</p></main>
+<footer class="footer"><div class="shell footer-inner"><span>Zero-Jank Scroll Agent Skill · MIT</span><span>Created by Harsha Varma</span></div></footer>
+</body>
+</html>

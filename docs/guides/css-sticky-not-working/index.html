@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Why CSS Position Sticky Is Not Working — Practical Checklist</title>
+<meta name="description" content="Fix CSS position sticky failures caused by overflow ancestors, insufficient container height, transforms, containment, header offsets, zoom, and short viewports.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/guides/css-sticky-not-working/">
+<link rel="stylesheet" href="../../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why CSS Position Sticky Is Not Working — Practical Checklist">
+<meta property="og:description" content="Fix CSS position sticky failures caused by overflow ancestors, insufficient container height, transforms, containment, header offsets, zoom, and short viewports.">
+<meta property="og:url" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/guides/css-sticky-not-working/">
+<meta property="og:image" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/assets/social-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Why CSS Position Sticky Is Not Working — Practical Checklist">
+<meta name="twitter:description" content="Fix CSS position sticky failures caused by overflow ancestors, insufficient container height, transforms, containment, header offsets, zoom, and short viewports.">
+<meta name="twitter:image" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/assets/social-card.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"Zero-Jank Scroll Agent Skill","description":"Open-source Agent Skill for building and auditing smooth, accessible, maintainable scroll-driven web interfaces.","codeRepository":"https://github.com/harshavarma02/zero-jank-scroll-agent-skill","programmingLanguage":["Markdown","JavaScript","CSS","HTML"],"license":"https://github.com/harshavarma02/zero-jank-scroll-agent-skill/blob/main/LICENSE","author":{"@type":"Person","name":"Harsha Varma","url":"https://github.com/harshavarma02"}}</script>
+</head>
+<body>
+<header class="nav"><div class="shell nav-inner"><a class="brand" href="../../index.html">Zero-Jank Scroll</a><nav class="nav-links" aria-label="Primary"><a href="../../demo/">Demo</a><a href="../../benchmark/">Benchmark</a><a href="../../guides/fix-scroll-jank/">Guides</a><a href="https://github.com/harshavarma02/zero-jank-scroll-agent-skill">GitHub</a></nav></div></header>
+<main class="article"><div class="breadcrumbs"><a href="../../">Home</a> / Guides / CSS sticky not working</div><div class="kicker">Failure checklist</div><h1>Why CSS position: sticky stops working</h1><p>A sticky element is constrained by its scrolling and containing ancestors. The visible symptom may look random, but the cause is usually discoverable by inspecting one ancestor at a time.</p><h2>Check the actual scroll container</h2><p>An ancestor with overflow other than visible or clip can become the relevant scrolling container. Confirm that this ancestor has enough scroll distance and that the sticky element is intended to stick inside it.</p><h2>Check available height</h2><p>A sticky item cannot remain pinned longer than its containing block permits. If the sticky element is as tall as the container, or the parent ends immediately, there is no useful sticky interval.</p><h2>Check the inset</h2><p>Sticky positioning needs an inset such as top or inset-block-start. Derive the value from the real fixed-header height and a shared gap variable. Do not repeat unrelated magic numbers in CSS and JavaScript.</p><h2>Check transforms and containment</h2><p>Transforms, containment, layout wrappers, and generated builder markup can change containing-block or clipping behavior. Temporarily disable suspicious ancestor rules and inspect the browser's layout tools.</p><h2>Check short viewports and zoom</h2><p>A desktop layout can become effectively short at 200% zoom. If the sticky stage no longer fits, switch to normal document flow rather than forcing a clipped pinned experience.</p><div class="callout">A reliable sticky story needs three things: a clear scroll container, enough containing-block distance, and a sticky element that fits the available viewport.</div></main>
+<footer class="footer"><div class="shell footer-inner"><span>Zero-Jank Scroll Agent Skill · MIT</span><span>Created by Harsha Varma</span></div></footer>
+</body>
+</html>

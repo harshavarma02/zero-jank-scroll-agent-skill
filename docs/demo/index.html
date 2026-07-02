@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Before and After Sticky Scroll Performance Demo — Zero-Jank Scroll</title>
+<meta name="description" content="Compare a fragile 400vh scroll-listener implementation with semantic steps, CSS sticky positioning, and a top-aligned IntersectionObserver.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/demo/">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Before and After Sticky Scroll Performance Demo — Zero-Jank Scroll">
+<meta property="og:description" content="Compare a fragile 400vh scroll-listener implementation with semantic steps, CSS sticky positioning, and a top-aligned IntersectionObserver.">
+<meta property="og:url" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/demo/">
+<meta property="og:image" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/assets/social-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Before and After Sticky Scroll Performance Demo — Zero-Jank Scroll">
+<meta name="twitter:description" content="Compare a fragile 400vh scroll-listener implementation with semantic steps, CSS sticky positioning, and a top-aligned IntersectionObserver.">
+<meta name="twitter:image" content="https://harshavarma02.github.io/zero-jank-scroll-agent-skill/assets/social-card.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"Zero-Jank Scroll Agent Skill","description":"Open-source Agent Skill for building and auditing smooth, accessible, maintainable scroll-driven web interfaces.","codeRepository":"https://github.com/harshavarma02/zero-jank-scroll-agent-skill","programmingLanguage":["Markdown","JavaScript","CSS","HTML"],"license":"https://github.com/harshavarma02/zero-jank-scroll-agent-skill/blob/main/LICENSE","author":{"@type":"Person","name":"Harsha Varma","url":"https://github.com/harshavarma02"}}</script>
+</head>
+<body>
+<header class="nav"><div class="shell nav-inner"><a class="brand" href="../index.html">Zero-Jank Scroll</a><nav class="nav-links" aria-label="Primary"><a href="../demo/">Demo</a><a href="../benchmark/">Benchmark</a><a href="../guides/fix-scroll-jank/">Guides</a><a href="https://github.com/harshavarma02/zero-jank-scroll-agent-skill">GitHub</a></nav></div></header>
+<main class="article"><div class="breadcrumbs"><a href="../../">Home</a> / Demo</div><div class="kicker">Matched source comparison</div><h1>Before and after: fixing a laggy sticky-scroll section</h1><p>The two demos use the same content and visual concept. The before version performs avoidable work during native scrolling. The fixed version lets CSS own pinning and changes the right-side panel only when the next left-side control reaches the sticky top line.</p><div class="demo-links"><a class="demo-card before" href="before/"><strong>Before</strong><span>400vh track, global listener, repeated layout reads and DOM writes</span></a><a class="demo-card after" href="after/"><strong>After</strong><span>semantic steps, CSS sticky, top-aligned IntersectionObserver</span></a></div><h2>How to compare fairly</h2><ol><li>Use the same browser, viewport, CPU throttling, and input device.</li><li>Start at the hero and perform the same slow scroll, fast flick, click-to-step, and reverse-scroll sequence.</li><li>Keep the on-page counters visible.</li><li>Do not add artificial video stutter.</li></ol><div class="callout"><strong>Evidence boundary:</strong> the counters demonstrate architecture-level work performed by these examples. They do not claim a universal FPS improvement for every device or project.</div></main>
+<footer class="footer"><div class="shell footer-inner"><span>Zero-Jank Scroll Agent Skill · MIT</span><span>Created by Harsha Varma</span></div></footer>
+</body>
+</html>
