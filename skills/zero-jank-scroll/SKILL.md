@@ -4,7 +4,7 @@ description: Designs, implements, audits, and repairs smooth, accessible, produc
 license: MIT
 metadata:
   author: Harsha Varma
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Zero-Jank Scroll
@@ -141,7 +141,7 @@ For discrete steps:
 
 - Create one observer, not one global listener per component.
 - Observe step elements.
-- Use a center activation band through `rootMargin` or explicit thresholds.
+- Align the activation line with the intended sticky top offset through `rootMargin` or explicit sentinels. Use a center activation band only when the design explicitly calls for center-based switching.
 - Update active state only when the active step actually changes.
 - Disconnect the observer during cleanup.
 - Preserve DOM order and content without JavaScript.
@@ -149,7 +149,7 @@ For discrete steps:
 Click behavior:
 
 - Use real buttons or links.
-- Call the matching step's `scrollIntoView()`.
+- Call the matching real control or trigger element's `scrollIntoView()` so it aligns with the same activation line.
 - Respect reduced motion by switching smooth behavior to instant/auto.
 - Do not calculate absolute document coordinates unless a proven requirement prevents element-based scrolling.
 - Do not move keyboard focus merely because scrolling changed the active step.

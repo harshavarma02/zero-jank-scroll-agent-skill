@@ -1,9 +1,31 @@
 {
-  "name": "zero-jank-scroll",
-  "version": "0.1.0",
+  "name": "zero-jank-scroll-agent-skill",
+  "version": "0.2.0",
   "private": true,
-  "description": "Agent Skill for smooth, accessible, production-grade scroll-driven web interfaces",
+  "description": "Agent Skill for smooth, accessible, maintainable scroll animations, sticky sections, and scrollytelling interfaces.",
   "license": "MIT",
+  "author": "Harsha Varma",
+  "homepage": "https://harshavarma02.github.io/zero-jank-scroll-agent-skill/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harshavarma02/zero-jank-scroll-agent-skill.git"
+  },
+  "bugs": {
+    "url": "https://github.com/harshavarma02/zero-jank-scroll-agent-skill/issues"
+  },
+  "keywords": [
+    "agent-skill",
+    "skill-md",
+    "scroll-animation",
+    "scroll-performance",
+    "scrollytelling",
+    "sticky-scroll",
+    "intersection-observer",
+    "gsap",
+    "scrolltrigger",
+    "web-performance",
+    "accessibility"
+  ],
   "scripts": {
     "validate": "node scripts/validate.mjs",
     "audit": "node skills/zero-jank-scroll/scripts/audit-scroll-source.mjs ."

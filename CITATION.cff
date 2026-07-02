@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If Zero-Jank Scroll helped your work, cite the repository and link to the exact version used."
+title: "Zero-Jank Scroll Agent Skill"
+type: software
+authors:
+  - family-names: "Varma"
+    given-names: "Harsha"
+version: "0.2.0"
+date-released: "2026-07-02"
+url: "https://github.com/harshavarma02/zero-jank-scroll-agent-skill"
+repository-code: "https://github.com/harshavarma02/zero-jank-scroll-agent-skill"
+license: MIT
+keywords:
+  - agent skills
+  - scroll animation
+  - web performance
+  - accessibility
+  - scrollytelling

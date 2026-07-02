@@ -1,113 +1,151 @@
 <div align="center">
 
-# Zero-Jank Scroll
+# Zero-Jank Scroll Agent Skill
 
-### Teach AI coding agents to build scroll experiences that feel premium—not fragile.
+### Build and audit smooth sticky scroll, scrollytelling, parallax, and scroll-driven web interfaces—without fragile `400vh` tracks or per-frame framework rerenders.
 
-**Architecture selection · native scrolling · accessibility · runtime proof**
+[![Validate](https://github.com/harshavarma02/zero-jank-scroll-agent-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/harshavarma02/zero-jank-scroll-agent-skill/actions/workflows/validate.yml)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Agent Skill](https://img.shields.io/badge/Agent%20Skill-SKILL.md-111111.svg)](skills/zero-jank-scroll/SKILL.md)
+
+[Live site](https://harshavarma02.github.io/zero-jank-scroll-agent-skill/) · [Before/after demo](https://harshavarma02.github.io/zero-jank-scroll-agent-skill/demo/) · [Architecture benchmark](https://harshavarma02.github.io/zero-jank-scroll-agent-skill/benchmark/)
 
 </div>
 
-`zero-jank-scroll` is an installable Agent Skill for designing, implementing, reviewing, and repairing production-grade scroll-driven interfaces.
+**Zero-Jank Scroll** is an open-source `SKILL.md` package for AI coding agents. It helps agents design, implement, review, and repair production-grade scroll animations, sticky sections, scrollytelling experiences, parallax effects, active-section navigation, and scroll-linked interfaces.
 
-It is deliberately not a collection of flashy animation recipes. It teaches an agent to choose the least-complex correct architecture, preserve native scrolling, avoid main-thread and layout work, support reduced motion, and verify the result instead of declaring it “smooth.”
+The skill teaches the agent to choose between CSS `position: sticky`, `IntersectionObserver`, CSS scroll-driven animations, Motion, and GSAP ScrollTrigger based on the interaction—not based on hype or a one-library-fits-all rule.
 
-## Why this exists
+## The problem it solves
 
-AI-generated scroll sections often begin with:
+AI-generated scroll sections commonly ship with:
 
-- a hardcoded `300vh` or `400vh` track,
-- a global `scroll` listener,
+- a hardcoded `300vh` or `400vh` scroll track,
+- a global unthrottled `scroll` listener,
 - repeated `getBoundingClientRect()` calls,
 - percentage-to-step arithmetic,
 - JavaScript pinning,
-- large blur effects,
-- width-only mobile fallbacks,
-- no reduced-motion experience,
-- and no runtime measurement.
+- per-frame React/Vue/Svelte state updates,
+- paint-heavy blur and shadow transitions,
+- width-only responsive fallbacks,
+- and no reduced-motion or keyboard-safe behavior.
 
-Those implementations can look convincing in a desktop preview while becoming brittle, inaccessible, or janky in production.
-
-Zero-Jank Scroll gives coding agents a repeatable workflow for doing better.
-
-## What the skill does
-
-- Classifies the interaction as **discrete**, **continuous**, or **cinematic**.
-- Selects between CSS sticky positioning, IntersectionObserver, native CSS scroll timelines, Motion, and GSAP ScrollTrigger.
-- Refactors arbitrary scroll tracks into semantic step-driven layouts.
-- Prevents layout thrashing and scroll-state rerender storms.
-- Handles sticky ancestors, mobile browser chrome, short viewports, zoom, nested scrollers, and content changes.
-- Requires reduced-motion and keyboard-safe behavior.
-- Audits source code with a dependency-free heuristic scanner.
-- Requires browser evidence when runtime tools are available.
+These patterns may look polished in a desktop preview while becoming laggy, skipped, brittle, inaccessible, or difficult to maintain in production.
 
 ## Install
 
-### Open Agent Skills CLI
+List the available skills first:
 
 ```bash
-npx skills add harshavarma02/zero-jank-scroll --skill zero-jank-scroll
+npx skills add harshavarma02/zero-jank-scroll-agent-skill --list
 ```
 
-### GitHub CLI
+Install Zero-Jank Scroll:
 
 ```bash
-gh skill install harshavarma02/zero-jank-scroll zero-jank-scroll
+npx skills add harshavarma02/zero-jank-scroll-agent-skill --skill zero-jank-scroll
 ```
 
-### Direct project installation
+Install it globally for selected supported agents:
 
-Copy this directory into a supported project skill location:
+```bash
+npx skills add harshavarma02/zero-jank-scroll-agent-skill \
+  --skill zero-jank-scroll \
+  --global \
+  --agent claude-code \
+  --agent codex
+```
+
+You can also copy this directory into a project-supported skills location:
 
 ```text
 skills/zero-jank-scroll/
 ```
 
-Common project locations include:
-
-```text
-.agents/skills/zero-jank-scroll/
-.claude/skills/zero-jank-scroll/
-.github/skills/zero-jank-scroll/
-```
-
 ## Example prompts
 
 ```text
-Build a sticky four-step capabilities section without scroll jank.
+Build a sticky four-step capabilities section. Change the right panel only when the next left-side heading reaches the sticky top line.
 ```
 
 ```text
-Audit this landing page. Fast trackpad scrolling causes panels to skip and mobile feels laggy.
+Audit this React landing page. Fast trackpad scrolling causes panels to skip and the simulator rerenders continuously.
 ```
 
 ```text
-Refactor this 400vh scroll section so adding a fifth step requires no percentage math.
+Refactor this 400vh section so adding a fifth step requires no percentage math or hardcoded section height.
 ```
 
 ```text
-Should this interaction use IntersectionObserver, CSS scroll timelines, Motion, or GSAP ScrollTrigger?
+Choose between IntersectionObserver, CSS scroll timelines, Motion useScroll, and GSAP ScrollTrigger for this interaction, then justify the decision.
 ```
 
 ```text
-Review this PR specifically for scroll performance, reduced motion, and sticky-layout failures.
+Review this pull request for sticky containment failures, reduced motion, mobile viewport behavior, layout thrashing, and inactive animation loops.
 ```
 
-## Architecture rule in one table
+## Architecture decision table
 
-| Interaction | Default |
+| Interaction | Default architecture |
 |---|---|
-| Discrete step activation | Semantic step elements + `IntersectionObserver` |
-| Simple reveal | CSS transition + observer or view timeline enhancement |
-| Continuous progress mapping | CSS scroll timeline when support permits |
-| Existing Motion application | Motion values without React state per frame |
+| Discrete step activation | Semantic step elements + one `IntersectionObserver` |
+| Sticky visual persistence | CSS `position: sticky` |
+| Click-to-step navigation | `scrollIntoView()` on real target elements |
+| Simple reveal | CSS transition + observer |
+| Continuous progress mapping | CSS scroll/view timeline when support requirements permit |
+| Existing Motion application | Motion values without per-frame component state |
 | Complex scrubbed choreography | GSAP ScrollTrigger |
-| Pinning only | CSS `position: sticky` |
-| Mobile or short viewport | Normal document flow or simplified motion |
+| Narrow or short viewport | Normal document flow or simplified motion |
 
-The skill does not force one animation library onto every problem.
+## Before/after comparison
 
-## Included
+The comparison uses the same content and visual concept in both versions.
+
+### Before: fragile implementation
+
+- Hardcoded `400vh` track
+- Global unthrottled scroll listener
+- Repeated layout reads and writes
+- Percentage-based state switching
+- Manual `window.scrollTo()` coordinate calculations
+- Paint-heavy `filter: blur()` and `transition: all`
+- Artificial track retained on mobile
+
+### After: production-oriented implementation
+
+- Real semantic steps create scroll distance
+- CSS owns sticky positioning
+- One top-aligned `IntersectionObserver`
+- The state changes only when the next left-side control reaches the sticky top line
+- Real elements are navigated with `scrollIntoView()`
+- Only `opacity` and `transform` drive panel transitions
+- Width, height, zoom, keyboard, and reduced-motion fallbacks
+- Inactive panels are `inert` and `aria-hidden`
+
+Open:
+
+```text
+examples/scroll-comparison/before-laggy/index.html
+examples/scroll-comparison/after-fixed/index.html
+```
+
+## Source audit
+
+Run the dependency-free heuristic scanner:
+
+```bash
+node skills/zero-jank-scroll/scripts/audit-scroll-source.mjs .
+```
+
+JSON output:
+
+```bash
+node skills/zero-jank-scroll/scripts/audit-scroll-source.mjs . --json
+```
+
+The scanner reports possible source-level risks. It does not pretend static analysis can prove runtime smoothness.
+
+## Repository structure
 
 ```text
 skills/zero-jank-scroll/
@@ -121,83 +159,59 @@ skills/zero-jank-scroll/
     └── audit-scroll-source.mjs
 
 examples/
-└── sticky-steps/
-    └── index.html
+├── sticky-steps/
+│   └── index.html
+└── scroll-comparison/
+    ├── before-laggy/
+    ├── after-fixed/
+    └── README.md
 
-evals/
-├── quality-cases.md
-└── trigger-cases.json
+docs/
+├── index.html
+├── demo/
+├── benchmark/
+├── guides/
+└── sitemap.xml
 ```
-
-## Source audit
-
-Run the included heuristic source scanner:
-
-```bash
-node skills/zero-jank-scroll/scripts/audit-scroll-source.mjs .
-```
-
-JSON output:
-
-```bash
-node skills/zero-jank-scroll/scripts/audit-scroll-source.mjs . --json
-```
-
-The scanner intentionally reports evidence and possible risks rather than pretending static analysis can prove runtime smoothness.
-
-## Demo
-
-Open `examples/sticky-steps/index.html` in a browser. It demonstrates:
-
-- real scroll steps instead of an artificial `320vh` track,
-- a CSS-sticky stage,
-- one IntersectionObserver,
-- click-to-scroll with `scrollIntoView()`,
-- inactive panels made non-interactive,
-- width-and-height responsive fallbacks,
-- and reduced-motion behavior.
 
 ## Quality contract
 
 A generated or repaired interaction is not complete until the agent reports:
 
-1. the selected architecture and why,
-2. the rejected alternatives and why,
-3. accessibility behavior,
-4. responsive fallback behavior,
-5. files changed,
-6. evidence collected,
-7. remaining unverified risks.
+1. the interaction class,
+2. the selected architecture and why,
+3. rejected alternatives and why,
+4. accessibility and reduced-motion behavior,
+5. responsive fallback behavior,
+6. lifecycle and cleanup behavior,
+7. runtime evidence collected,
+8. and remaining unverified risks.
 
-“Looks smooth” is not evidence.
+> “Looks smooth” is not evidence.
 
-## Validate this repository
+## Validate
 
 ```bash
 node scripts/validate.mjs
 ```
 
-For GitHub's skill publishing flow:
+## Useful guides
 
-```bash
-gh skill publish --dry-run
-```
-
-## Roadmap
-
-- Runtime trace analyzer for Chrome/Playwright
-- React, Vue, Svelte, and Astro reference implementations
-- Reproduction fixtures for common sticky failures
-- Cross-browser test matrix
-- Public benchmark comparing agent output with and without the skill
+- [How to fix scroll jank](https://harshavarma02.github.io/zero-jank-scroll-agent-skill/guides/fix-scroll-jank/)
+- [IntersectionObserver vs scroll listener](https://harshavarma02.github.io/zero-jank-scroll-agent-skill/guides/intersection-observer-vs-scroll-listener/)
+- [Why CSS position: sticky stops working](https://harshavarma02.github.io/zero-jank-scroll-agent-skill/guides/css-sticky-not-working/)
 
 ## Contributing
 
-Real failure cases are more valuable than generic animation snippets. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Real failure cases, traces, browser-specific reproductions, framework lifecycle fixes, and evaluation prompts are more valuable than generic animation snippets. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Security
 
-Agent skills are operational instructions. Read [SECURITY.md](SECURITY.md) before installing third-party changes or executing bundled scripts.
+Agent skills are operational instructions. Review [SECURITY.md](SECURITY.md) and inspect bundled scripts before installing third-party changes.
+
+## Author
+
+Created and maintained by **Harsha Varma** (`@harshavarma02`).
 
 ## License
 

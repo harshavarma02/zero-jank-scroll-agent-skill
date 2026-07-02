@@ -17,7 +17,7 @@ This repository follows these rules:
 Inspect:
 
 ```bash
-gh skill preview harshavarma02/zero-jank-scroll zero-jank-scroll
+gh skill preview varmaharsha360/zero-jank-scroll zero-jank-scroll
 ```
 
 Review the file tree and executable scripts before installing.
