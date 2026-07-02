@@ -1,0 +1,44 @@
+name: Scroll failure
+description: Report a reproducible scroll, sticky, performance, or accessibility failure.
+title: "[failure]: "
+labels: ["failure-case"]
+body:
+  - type: textarea
+    attributes:
+      label: Reproduction
+      description: Provide a minimal repository, page, or code sample.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Browser and version
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Device and operating system
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Input method
+      options:
+        - Wheel
+        - Trackpad
+        - Touch
+        - Keyboard
+        - Assistive technology
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Actual behavior and evidence
+      description: Include a recording, trace, screenshot, or exact observation when possible.
+    validations:
+      required: true

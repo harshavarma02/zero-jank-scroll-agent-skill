@@ -1,0 +1,20 @@
+name: Framework example request
+description: Request or contribute a framework-specific example.
+title: "[framework]: "
+labels: ["framework"]
+body:
+  - type: input
+    attributes:
+      label: Framework and version
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Interaction to demonstrate
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Why the existing framework-independent guidance is insufficient
+    validations:
+      required: true

@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zero-Jank Scroll — Sticky Steps Demo</title>
+  <style>
+    :root {
+      --header-height: 4rem;
+      --surface: #f5f2ea;
+      --ink: #161616;
+      --muted: #696761;
+      --line: color-mix(in srgb, var(--ink), transparent 82%);
+      --panel: #ffffff;
+      --accent: #ff5a36;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      color: var(--ink);
+      background: var(--surface);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+
+    body { margin: 0; }
+
+    header {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 10;
+      min-block-size: var(--header-height);
+      display: flex;
+      align-items: center;
+      padding-inline: clamp(1rem, 5vw, 5rem);
+      border-block-end: 1px solid var(--line);
+      background: color-mix(in srgb, var(--surface), transparent 8%);
+    }
+
+    main { overflow: clip; }
+
+    .intro,
+    .outro {
+      min-block-size: 80svh;
+      display: grid;
+      place-items: center;
+      padding: 4rem 1rem;
+      text-align: center;
+    }
+
+    .intro h1 {
+      max-inline-size: 12ch;
+      margin: 0;
+      font-size: clamp(3rem, 9vw, 8rem);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+    }
+
+    .capabilities {
+      inline-size: min(90rem, calc(100% - 2rem));
+      margin-inline: auto;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(16rem, 0.75fr) minmax(0, 1.25fr);
+      gap: clamp(2rem, 6vw, 7rem);
+      align-items: start;
+    }
+
+    .steps {
+      counter-reset: capability;
+    }
+
+    .step {
+      min-block-size: clamp(28rem, 72svh, 52rem);
+      display: grid;
+      align-content: center;
+      scroll-margin-block-start: calc(var(--header-height) + 2rem);
+    }
+
+    .step button {
+      appearance: none;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      inline-size: 100%;
+      padding: 1.25rem 0;
+      border: 0;
+      border-block-start: 1px solid var(--line);
+      color: inherit;
+      background: transparent;
+      text-align: start;
+      cursor: pointer;
+    }
+
+    .step button::before {
+      counter-increment: capability;
+      content: "0" counter(capability);
+      color: var(--muted);
+    }
+
+    .step button[aria-current="step"] {
+      color: var(--accent);
+    }
+
+    .step button:focus-visible {
+      outline: 3px solid currentColor;
+      outline-offset: 0.35rem;
+    }
+
+    .step h2 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.045em;
+    }
+
+    .step p {
+      max-inline-size: 42ch;
+      margin: 1rem 0 0 3rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .stage-wrap {
+      min-inline-size: 0;
+    }
+
+    .stage {
+      position: sticky;
+      inset-block-start: calc(var(--header-height) + 1.5rem);
+      block-size: min(calc(100svh - var(--header-height) - 3rem), 46rem);
+      min-block-size: 28rem;
+      border: 1px solid var(--line);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background: var(--panel);
+    }
+
+    .panel {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: clamp(1.5rem, 5vw, 4rem);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translate3d(0, 1rem, 0) scale(0.985);
+      transition:
+        opacity 220ms ease,
+        transform 320ms cubic-bezier(.22, 1, .36, 1),
+        visibility 0s linear 320ms;
+    }
+
+    .panel[data-active="true"] {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translate3d(0, 0, 0) scale(1);
+      transition-delay: 0s;
+    }
+
+    .visual {
+      inline-size: min(100%, 34rem);
+      aspect-ratio: 4 / 3;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 2rem 2rem;
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 800;
+      letter-spacing: -0.08em;
+    }
+
+    @media (min-width: 64rem) and (min-height: 42rem) {
+      .stage-wrap { min-block-size: 100%; }
+    }
+
+    @media (max-width: 63.999rem), (max-height: 41.999rem) {
+      .layout { display: block; }
+      .step { min-block-size: auto; padding-block: 3rem; }
+      .stage { display: none; }
+      .step::after {
+        content: attr(data-label);
+        min-block-size: 18rem;
+        display: grid;
+        place-items: center;
+        margin-block-start: 1.5rem;
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: var(--panel);
+        font-size: clamp(3rem, 18vw, 7rem);
+        font-weight: 800;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .panel { transition: opacity 1ms linear; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header><strong>Zero-Jank Scroll</strong></header>
+
+  <main>
+    <section class="intro">
+      <h1>Real steps. Native scroll.</h1>
+    </section>
+
+    <section class="capabilities" aria-labelledby="capabilities-title">
+      <h2 id="capabilities-title">Capabilities</h2>
+
+      <div class="layout">
+        <div class="steps">
+          <article class="step" id="step-parse" data-step="parse" data-label="Parse">
+            <button type="button" aria-current="step" data-target="parse">
+              <span>
+                <h2>Parse</h2>
+              </span>
+            </button>
+            <p>Turn an incoming document into a stable structural representation.</p>
+          </article>
+
+          <article class="step" id="step-extract" data-step="extract" data-label="Extract">
+            <button type="button" data-target="extract">
+              <span>
+                <h2>Extract</h2>
+              </span>
+            </button>
+            <p>Identify the fields, relationships, and evidence that matter.</p>
+          </article>
+
+          <article class="step" id="step-split" data-step="split" data-label="Split">
+            <button type="button" data-target="split">
+              <span>
+                <h2>Split</h2>
+              </span>
+            </button>
+            <p>Divide complex material into independently useful units.</p>
+          </article>
+
+          <article class="step" id="step-tag" data-step="tag" data-label="Tag">
+            <button type="button" data-target="tag">
+              <span>
+                <h2>Tag</h2>
+              </span>
+            </button>
+            <p>Attach consistent metadata for retrieval, review, and automation.</p>
+          </article>
+        </div>
+
+        <div class="stage-wrap" aria-label="Capability preview">
+          <div class="stage">
+            <section class="panel" data-panel="parse" data-active="true">
+              <div class="visual">P</div>
+            </section>
+            <section class="panel" data-panel="extract" aria-hidden="true" inert>
+              <div class="visual">E</div>
+            </section>
+            <section class="panel" data-panel="split" aria-hidden="true" inert>
+              <div class="visual">S</div>
+            </section>
+            <section class="panel" data-panel="tag" aria-hidden="true" inert>
+              <div class="visual">T</div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="outro">
+      <h2>The document creates the timeline.</h2>
+    </section>
+  </main>
+
+  <script type="module">
+    const steps = [...document.querySelectorAll("[data-step]")];
+    const buttons = [...document.querySelectorAll("[data-target]")];
+    const panels = [...document.querySelectorAll("[data-panel]")];
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
+
+    let activeId = "parse";
+
+    function setActive(id) {
+      if (id === activeId) return;
+      activeId = id;
+
+      for (const button of buttons) {
+        const active = button.dataset.target === id;
+        if (active) button.setAttribute("aria-current", "step");
+        else button.removeAttribute("aria-current");
+      }
+
+      for (const panel of panels) {
+        const active = panel.dataset.panel === id;
+        panel.dataset.active = String(active);
+        panel.toggleAttribute("inert", !active);
+        panel.setAttribute("aria-hidden", String(!active));
+      }
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (visible) setActive(visible.target.dataset.step);
+    }, {
+      root: null,
+      rootMargin: "-42% 0px -42% 0px",
+      threshold: [0, 0.01]
+    });
+
+    for (const step of steps) observer.observe(step);
+
+    for (const button of buttons) {
+      button.addEventListener("click", () => {
+        document.querySelector(`[data-step="${button.dataset.target}"]`)?.scrollIntoView({
+          behavior: reduceMotion.matches ? "auto" : "smooth",
+          block: "center"
+        });
+      });
+    }
+
+    addEventListener("pagehide", () => observer.disconnect(), { once: true });
+  </script>
+</body>
+</html>

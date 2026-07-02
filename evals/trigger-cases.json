@@ -1,0 +1,22 @@
+{
+  "shouldTrigger": [
+    "Build a four-step sticky capabilities section where the visual changes as each chapter crosses the viewport center.",
+    "Our React landing page becomes choppy when I flick the trackpad through a pinned GSAP sequence. Audit and fix it.",
+    "Refactor this 400vh scroll implementation so adding a new step does not require updating percentage ranges.",
+    "Should I use IntersectionObserver, useScroll, CSS animation-timeline, or ScrollTrigger for this scrollytelling section?",
+    "The sticky product image stops sticking on Safari after we added overflow hidden to a wrapper.",
+    "Make this parallax hero respect prefers-reduced-motion and avoid component rerenders.",
+    "Review this PR for scroll performance, sticky containment, keyboard access, and mobile browser viewport issues.",
+    "The active navigation skips from step one to step three during fast scrolling."
+  ],
+  "shouldNotTrigger": [
+    "Add cursor-based pagination to this REST API.",
+    "Virtualize a table with one million database rows.",
+    "Make the chat message list scroll to the newest message.",
+    "Fix horizontal overflow caused by a long unbroken URL.",
+    "Implement infinite loading for a social feed backend.",
+    "Explain SQL OFFSET pagination.",
+    "Add a scrollbar to a modal body.",
+    "Create a generic CSS animation for a loading spinner."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "zero-jank-scroll",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent Skill for smooth, accessible, production-grade scroll-driven web interfaces",
+  "license": "MIT",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "audit": "node skills/zero-jank-scroll/scripts/audit-scroll-source.mjs ."
+  }
+}
